@@ -1,0 +1,51 @@
+import * as path from "path";
+import * as vscode from "vscode";
+import { CompletionProvider } from "./providers/completion-provider";
+import { HoverProvider } from "./providers/hover-provider";
+import { loadConfiguration } from "./utils/configuration";
+import { Icon, IconRaw } from "./utils/types";
+
+const disposables: vscode.Disposable[] = [];
+
+function clearAndLoadExtension(context: vscode.ExtensionContext) {
+  unregisterProviders(context);
+  registerProviders(context);
+}
+
+function unregisterProviders(context: vscode.ExtensionContext) {
+  // If the providers are about to be registered again, remove previous instances first
+  for (const disposable of disposables) {
+    const existingIndex = context.subscriptions.indexOf(disposable);
+    if (existingIndex !== -1) {
+      context.subscriptions.splice(existingIndex, 1);
+    }
+
+    disposable.dispose();
+  }
+}
+
+function registerProviders(context: vscode.ExtensionContext) {
+  const config = loadConfiguration();
+  const selector: vscode.DocumentSelector = { language: "html", scheme: "file" };
+
+  const data = require(path.join(path.dirname(__dirname), `data/material-v${config.version}`, "icons.json")) as Record<string, IconRaw>;
+  const icons = Object.entries(data).map(([name, entry]) => new Icon(name, entry, config.previewStyle));
+
+  const provideCompletionItems = new CompletionProvider(icons);
+  const provideHoverItems = new HoverProvider(icons);
+
+  disposables.push(
+    vscode.languages.registerCompletionItemProvider(selector, provideCompletionItems),
+    vscode.languages.registerHoverProvider(selector, provideHoverItems)
+  );
+
+  context.subscriptions.push(...disposables);
+}
+
+export function activate(context: vscode.ExtensionContext) {
+  // clearAndLoadExtension(context);
+  registerProviders(context);
+}
+
+// This method is called when your extension is deactivated
+export function deactivate() {}
