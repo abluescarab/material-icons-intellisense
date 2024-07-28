@@ -13,7 +13,6 @@ function clearAndLoadExtension(context: vscode.ExtensionContext) {
 }
 
 function unregisterProviders(context: vscode.ExtensionContext) {
-  // If the providers are about to be registered again, remove previous instances first
   for (const disposable of disposables) {
     const existingIndex = context.subscriptions.indexOf(disposable);
     if (existingIndex !== -1) {
@@ -43,9 +42,13 @@ function registerProviders(context: vscode.ExtensionContext) {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  // clearAndLoadExtension(context);
-  registerProviders(context);
+  vscode.workspace.onDidChangeConfiguration(e => {
+    if (e.affectsConfiguration("material-icons-intellisense")) {
+      clearAndLoadExtension(context);
+    }
+  });
+
+  clearAndLoadExtension(context);
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}
