@@ -1,0 +1,7 @@
+{
+  "config.preview.iconFill.description": "Mostrar iconos con estilo `fill` en la previsualización.",
+  "config.preview.backgroundColor.description": "Color de fondo del icono en la previsualización. Admite cualquier valor de color CSS válido.",
+  "config.preview.foregroundColor.description": "Color de primer plano del icono en la previsualización. Admite cualquier valor de color CSS válido.",
+  "config.version.description": "Versión principal de Material Icons a utilizar. Más información en [Material Icons](https://github.com/google/material-design-icons?tab=readme-ov-file#material-symbols).",
+  "config.preview.color.patternErrorMessage": "Formato de color no válido. Utiliza un valor de color CSS válido."
+}

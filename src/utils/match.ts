@@ -1,9 +1,14 @@
 import { Position, Range, TextDocument } from "vscode";
-
+// <span class="material-symbols-outlined">
+// home
+// </span>
 export function match(document: TextDocument, position: Position): boolean {
   // Regexps to match the opening tag of a mat-icon element
-  const openingTagRegex = /<mat-icon(\s+[^>]*)?\n?\s*>$/;
-  const closingTagRegex = /^<\/mat-icon\n?\s*>/;
+  const openingTagMatIconRegex = /<mat-icon(\s+[^>]*)?\n?\s*>$/;
+  const closingTagMatIconRegex = /^<\/(mat-icon)\n?\s*>/;
+  // Regexps to match the opening and closing tags of a span element with the class `material-symbols-outlined`
+  const openingTagSpanRegex = /<span\s+[^>]*class\s*=\s*["'].*?\bmaterial-symbols-outlined\b.*?["'][^>]*>/;
+  const closingTagSpanRegex = /^<\/(span)\n?\s*>/;
 
   // Get the previous and next lines
   const previousLine = position.line > 0 ? document.lineAt(position.line - 1).text : "";
@@ -19,8 +24,11 @@ export function match(document: TextDocument, position: Position): boolean {
   const nextContent = (currentLineEnd + nextLine).trim();
 
   // Check if the current line is a mat-icon element
-  const openingTagMatch = previousContent.match(openingTagRegex);
-  const closingTagMatch = nextContent.match(closingTagRegex);
+  const openingTagMatch = previousContent.match(openingTagMatIconRegex);
+  const closingTagMatch = nextContent.match(closingTagMatIconRegex);
+  // Check if the current line is a span element with the class `material-symbols-outlined`
+  const openingTagSpanMatch = previousContent.match(openingTagSpanRegex);
+  const closingTagSpanMatch = nextContent.match(closingTagSpanRegex);
 
-  return Boolean(openingTagMatch && closingTagMatch);
+  return Boolean((openingTagMatch && closingTagMatch) || (openingTagSpanMatch && closingTagSpanMatch));
 }

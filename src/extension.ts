@@ -28,7 +28,7 @@ function registerProviders(context: vscode.ExtensionContext) {
   const selector: vscode.DocumentSelector = { language: "html", scheme: "file" };
 
   const data = require(path.join(path.dirname(__dirname), `data/material-v${config.version}`, "icons.json")) as Record<string, IconRaw>;
-  const icons = Object.entries(data).map(([name, entry]) => new Icon(name, entry, config.previewStyle));
+  const icons = Object.entries(data).map(([name, entry]) => new Icon(name, entry, config));
 
   const provideCompletionItems = new CompletionProvider(icons);
   const provideHoverItems = new HoverProvider(icons);

@@ -10,6 +10,7 @@ export enum ConfigKey {
   Version = "version",
   PreviewBackgroundColor = "preview.backgroundColor",
   PreviewForegroundColor = "preview.foregroundColor",
+  PreviewiconFill = "preview.iconFill",
 }
 
 export function loadConfiguration(): Configuration {
@@ -19,6 +20,7 @@ export function loadConfiguration(): Configuration {
   const previewStyle = {
     backgroundColor: config.get<string>(ConfigKey.PreviewBackgroundColor, "#ffffff"),
     foregroundColor: config.get<string>(ConfigKey.PreviewForegroundColor, "#000000"),
+    iconFill: config.get<boolean>(ConfigKey.PreviewiconFill, true),
   };
 
   return { version, previewStyle };

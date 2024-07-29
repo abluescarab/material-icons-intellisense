@@ -1,14 +1,19 @@
 import { CompletionItem, CompletionItemKind, Hover, MarkdownString } from "vscode";
+import { Configuration } from "./configuration";
 
 export type IconRaw = {
   category: string;
   unicode: string;
-  svg: string;
+  svg: {
+    fill: string;
+    outline: string;
+  };
 };
 
 export interface PreviewStyle {
   backgroundColor: string;
   foregroundColor: string;
+  iconFill: boolean;
 }
 
 export enum MaterialIconsVersion {
@@ -16,27 +21,36 @@ export enum MaterialIconsVersion {
   V4 = "4",
 }
 
+const SVG_VIEWBOX: Record<MaterialIconsVersion, string> = {
+  [MaterialIconsVersion.V3]: "-2 -2 28 28",
+  [MaterialIconsVersion.V4]: "0 -960 960 960",
+};
+
 export class Icon {
   private preview: MarkdownString = new MarkdownString("");
 
-  constructor(public name: string, private entry: IconRaw, private previewStyle: PreviewStyle) {
+  constructor(public name: string, private entry: IconRaw, private config: Configuration) {
     this.setPreview();
   }
 
   private setPreview(): void {
-    const innerSvg = this.entry.svg
-      .replaceAll("<path", `<path fill="${this.previewStyle.foregroundColor}"`)
-      .replaceAll("<circle", `<circle fill="${this.previewStyle.foregroundColor}"`);
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-2 -2 28 28" style="background-color: ${this.previewStyle.backgroundColor}">${innerSvg}</svg>`;
+    if (!this.entry.svg) {
+      console.log(this.name, this.entry);
+    }
+    const innerSvg = this.entry.svg[this.config.previewStyle.iconFill ? "fill" : "outline"]
+      .replaceAll("<path", `<path fill="${this.config.previewStyle.foregroundColor}"`)
+      .replaceAll("<circle", `<circle fill="${this.config.previewStyle.foregroundColor}"`);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="${
+      SVG_VIEWBOX[this.config.version]
+    }" style="background-color: ${this.config.previewStyle.backgroundColor}">${innerSvg}</svg>`;
     const iconBase64 = "data:image/svg+xml;utf8;base64," + Buffer.from(svg).toString("base64");
     this.preview = new MarkdownString(
       [
-        "### " + this.titlelize(this.name),
+        `### ${this.titlelize(this.name)}`,
         `![](${iconBase64}%20|%20width=64%20height=64")`,
-        `| **Icon name**&nbsp;&nbsp; | \`${this.name}\`           |`,
-        `|---------------------------|----------------------------|`,
-        `| Category                  | \`${this.entry.category}\` |`,
-        `| Unicode                   | \`${this.entry.unicode}\`  |`,
+        `| Category&nbsp;&nbsp;      | \`${this.entry.category}\` |`,
+        `|:--------------------------|:---------------------------|`,
+        `| **Unicode**               | \`${this.entry.unicode}\`  |`,
       ].join("\n")
     );
   }
