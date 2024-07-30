@@ -1,13 +1,21 @@
 import { Position, Range, TextDocument } from "vscode";
-// <span class="material-symbols-outlined">
-// home
-// </span>
+
 export function match(document: TextDocument, position: Position): boolean {
   // Regexps to match the opening tag of a mat-icon element
   const openingTagMatIconRegex = /<mat-icon(\s+[^>]*)?\n?\s*>$/;
   const closingTagMatIconRegex = /^<\/(mat-icon)\n?\s*>/;
-  // Regexps to match the opening and closing tags of a span element with the class `material-symbols-outlined`
-  const openingTagSpanRegex = /<span\s+[^>]*class\s*=\s*["'].*?\bmaterial-symbols-outlined\b.*?["'][^>]*>/;
+
+  /** Regexps to match the opening and closing tags of a span element with the next classes:
+   * - material-symbols-outlined
+   * - material-symbols-rounded
+   * - material-symbols-sharp
+   * - material-icons
+   * - material-icons-outlined
+   * - material-icons-round
+   * - material-icons-sharp
+   * - material-icons-two-tone */
+  const openingTagSpanRegex =
+    /<span\s+[^>]*class\s*=\s*["'][^"']*(?<![\w-])(material-icons(-outlined|-round|-sharp|-two-tone)?|material-symbols-(outlined|rounded|sharp))(?![\w-])[^"']*["'][^>]*>/;
   const closingTagSpanRegex = /^<\/(span)\n?\s*>/;
 
   // Get the previous and next lines
