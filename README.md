@@ -1,71 +1,109 @@
-# material-icons-intellisense README
+<p align="center">
+  <img alt="Material Icons Intellisense Logo" src="static/logo.png" width="160" />
+</p>
 
-This is the README for your extension "material-icons-intellisense". After writing up a brief description, we recommend including the following sections.
+<h1 align="center">
+  Material Icons Intellisense for VS Code
+</h1>
+<p align="center">
+  Suggestions, Auto-complete & Preview of Material Icons or Material Symbols
+</p>
+<p align="center">
+  <a href="https://marketplace.visualstudio.com/items?itemName=MarianoIbarra.material-icons-intellisense">
+    <img alt="Version" src="https://img.shields.io/visual-studio-marketplace/v/MarianoIbarra.material-icons-intellisense?color=brightgreen" />
+  </a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=MarianoIbarra.material-icons-intellisense">
+    <img alt="Downloads" src="https://img.shields.io/visual-studio-marketplace/d/MarianoIbarra.material-icons-intellisense" />
+  </a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=MarianoIbarra.material-icons-intellisense">
+    <img alt="Installs" src="https://img.shields.io/visual-studio-marketplace/i/MarianoIbarra.material-icons-intellisense" />
+  </a>
+</p>
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+![Demo](static/demo.gif)
 
-For example if there is an image subfolder under your extension project workspace:
+### For HTML vanilla, React, Vue
 
-\!\[feature X\]\(images/feature-x.png\)
+```html
+<span class="material-symbols-outline">home</span>
+```
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+The extension matches with `span` tag with any of the following classes:
+
+- material-symbols-outlined
+- material-symbols-rounded
+- material-symbols-sharp
+- material-icons
+- material-icons-outlined
+- material-icons-round
+- material-icons-sharp
+- material-icons-two-tone
+
+### For Angular
+
+```html
+<mat-icon>home</mat-icon>
+```
+
+The extension matches with `mat-icon`. See [Angular Material](https://material.angular.io/components/icon/overview) for more information.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+To use this extension, you need to have **Material symbols** or **Material icons** in your project. You can find more information about Material symbols [here](https://developers.google.com/fonts/docs/material_symbols#use_in_web).
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+### `material-icons-intellisense.version`
 
-For example:
+This configuration allows you to select the version to use:
 
-This extension contributes the following settings:
+- `3` See [Material Icons](https://developers.google.com/fonts/docs/material_icons)
+- `4` See [Material Symbols](https://developers.google.com/fonts/docs/material_symbols)
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+```json
+{
+  "material-icons-intellisense.version": "4"
+}
+```
 
-## Known Issues
+### `material-icons-intellisense.preview.backgroundColor`
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Background color of the preview icon. _Supports any valid CSS color value._
 
-## Release Notes
+```json
+{
+  "material-icons-intellisense.preview.backgroundColor": "#ffffff"
+}
+```
 
-Users appreciate release notes as you update your extension.
+### `material-icons-intellisense.preview.foregroundColor`
 
-### 1.0.0
+Foreground color of the preview icon. _Supports any valid CSS color value._
 
-Initial release of ...
+```json
+{
+  "material-icons-intellisense.preview.foregroundColor": "#000000"
+}
+```
 
-### 1.0.1
+### `material-icons-intellisense.preview.iconFill`
 
-Fixed issue #.
+Show icons with `fill` style in the preview.
 
-### 1.1.0
+```json
+{
+  "material-icons-intellisense.preview.iconFill": true
+}
+```
 
-Added features X, Y, and Z.
+## Upcoming Features
 
----
+Here are some of the upcoming features that will be added to Material Icons Intellisense:
 
-## Following extension guidelines
+- Inline decorator to preview icon
+- Integration with other popular code editors
+- Customizable html tag & class to match
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Stay tuned for these exciting updates in future releases!

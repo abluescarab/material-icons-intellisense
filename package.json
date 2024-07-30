@@ -1,10 +1,24 @@
 {
   "name": "material-icons-intellisense",
-  "displayName": "Material Icons IntelliSense",
-  "description": "",
-  "version": "0.0.1",
+  "displayName": "Material Icons Intellisense",
+  "description": "Suggestions, Auto-complete & Preview of Material Icons or Material Symbols.",
+  "publisher": "marianoibarra",
+  "author": {
+    "name": "Mariano Ibarra",
+    "url": "https://marianoibarra.com/",
+    "email": "marianoibarratesta@outlook.com"
+  },
+  "icon": "static/logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marianoibarra/material-icons-intellisense"
+  },
+  "bugs": {
+    "url": "https://github.com/marianoibarra/material-icons-intellisense/issues"
+  },
+  "version": "0.8.0",
   "engines": {
-    "vscode": "^1.91.0"
+    "vscode": "^1.61.0"
   },
   "categories": [
     "Other"
