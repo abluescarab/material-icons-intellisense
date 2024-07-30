@@ -24,7 +24,7 @@
     "Other"
   ],
   "activationEvents": [
-    "*"
+    "onLanguage:html"
   ],
   "main": "./out/extension.js",
   "contributes": {
